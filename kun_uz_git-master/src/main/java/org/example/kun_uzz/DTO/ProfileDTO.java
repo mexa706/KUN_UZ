@@ -17,7 +17,7 @@ public class ProfileDTO {
     private String password;
     private ProfileStatus status;
     private ProfileRole role;
+    private Integer photo_id;
     private Boolean visible;
     private LocalDate created_date;
-    private Integer photo_id;
 }

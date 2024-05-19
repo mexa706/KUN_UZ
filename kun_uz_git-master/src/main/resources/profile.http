@@ -1,0 +1,16 @@
+### Create region
+POST localhost:8081/profile/create
+Content-Type: application/json
+
+{
+  "name": "Mexa",
+  "surname": "Say",
+  "email": "p.p.maga.zver@gmail.com",
+  "phone": "+998337706673",
+  "password": "20020102tT",
+  "role": "ROLE_USER",
+  "photo_id": "5"
+}
+
+### Get all
+GET localhost:8081/profile/all
