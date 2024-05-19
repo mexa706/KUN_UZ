@@ -1,0 +1,21 @@
+### Create region
+POST localhost:8081/region/create
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "Almazor uz",
+  "nameEn": "Almazar en",
+  "nameRu": "Алмазар ru"
+}
+
+### Get all
+GET localhost:8081/region/all
+
+### Get all by lang
+GET localhost:8081/region/lang
+Accept-Language:ru
+
+### Get all by lang
+GET localhost:8081/region/lang
+Accept-Language:ru
