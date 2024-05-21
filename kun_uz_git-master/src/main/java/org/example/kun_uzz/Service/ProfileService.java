@@ -14,6 +14,7 @@ import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
 import org.example.kun_uzz.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,9 +41,13 @@ public class ProfileService {
         return toDTO(entity);
     }
 
-    public Boolean update(Integer id, ProfileCreateDTO dto) {
+    public ProfileDTO update(Integer id, ProfileCreateDTO dto) {
+
+
 
         ProfileEntity entity = new ProfileEntity();
+
+        entity=get(id);
 
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
@@ -53,7 +58,8 @@ public class ProfileService {
 
 
         profileRepository.save(entity);
-        return true;
+
+        return toDTO(entity);
     }
 
     public Boolean delete(Integer id) {

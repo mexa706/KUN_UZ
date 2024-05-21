@@ -8,9 +8,23 @@ Content-Type: application/json
   "email": "p.p.maga.zver@gmail.com",
   "phone": "+998337706673",
   "password": "20020102tT",
-  "role": "ROLE_USER",
-  "photo_id": "5"
+  "role": "ROLE_ADMIN",
+  "photo_id": "4"
 }
 
 ### Get all
 GET localhost:8081/profile/all
+
+### update student
+PUT localhost:8081/profile/update/153
+Content-Type: application/json
+
+{
+  "name": "Chumar",
+  "surname": "Say",
+  "email": "maga.zver@gmail.com",
+  "phone": "+998337706673",
+  "password": "20020102tT",
+  "role": "ROLE_MODERATOR",
+  "photo_id": "12"
+}

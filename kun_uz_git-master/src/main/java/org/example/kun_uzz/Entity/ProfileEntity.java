@@ -27,8 +27,10 @@ public class ProfileEntity {
     @Column(name = "password")
     private String password;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ProfileStatus status=ProfileStatus.ACTIVE;
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private ProfileRole role;
     @Column(name = "photo_id")
     private Integer photo_id;
