@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 @Setter
 public class CategoryDTO {
     private Integer id;
+    private Integer order_number;
     private String name_uz;
     private String name_ru;
     private String name_en;
-    private boolean visible;
+    private Boolean visible;
     private LocalDateTime createdDate;
 }

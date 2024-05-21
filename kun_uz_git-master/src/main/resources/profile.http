@@ -15,7 +15,7 @@ Content-Type: application/json
 ### Get all
 GET localhost:8081/profile/all
 
-### update student
+### update profile
 PUT localhost:8081/profile/update/153
 Content-Type: application/json
 
@@ -28,3 +28,6 @@ Content-Type: application/json
   "role": "ROLE_MODERATOR",
   "photo_id": "12"
 }
+
+### delete profile by id
+DELETE localhost:8081/profile/delete/153

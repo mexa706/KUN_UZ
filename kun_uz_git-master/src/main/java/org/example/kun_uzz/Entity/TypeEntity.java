@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "article_type")
-public class ArticleTypeEntity {
+@Table(name = "type_entity")
+public class TypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
@@ -20,8 +20,10 @@ public class ArticleTypeEntity {
     private String name_ru;
     @Column(name = "name_en")
     private String name_en;
+    @Column(name="order_number")
+    private Integer orderNumber;
     @Column(name = "visible")
-    private boolean visible = true;
+    private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
 }

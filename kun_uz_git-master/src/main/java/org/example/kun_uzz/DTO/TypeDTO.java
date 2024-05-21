@@ -6,11 +6,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 @Getter
 @Setter
-public class ArticleTypeDTO {
+public class TypeDTO {
     private Integer id;
-    private String name_uz;
-    private String name_ru;
-    private String name_en;
-    private boolean visible;
+    private String nameUz;
+    private String nameRu;
+    private String nameEn;
+    private Integer orderNumber;
+    private Boolean visible;
     private LocalDateTime createdDate;
 }

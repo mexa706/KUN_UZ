@@ -97,9 +97,9 @@ public class RegionService {
     public  RegionDTO toDTO(RegionEntity entity){
         RegionDTO dto = new RegionDTO();
         dto.setId(entity.getId());
-        dto.setName_uz(entity.getName_uz());
-        dto.setName_en(entity.getName_en());
-        dto.setName_ru(entity.getName_ru());
+        dto.setNameUz(entity.getName_uz());
+        dto.setNameEn(entity.getName_en());
+        dto.setNameRu(entity.getName_ru());
         dto.setVisible(entity.getVisible());
         dto.setOrderNumber(entity.getOrderNumber());
         dto.setCreatedDate(entity.getCreatedDate());
