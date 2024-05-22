@@ -1,0 +1,32 @@
+### Create region
+POST localhost:8081/profile/create
+Content-Type: application/json
+
+{
+  "name": "Mexa",
+  "surname": "Say",
+  "email": "p.p.maga.zver@gmail.com",
+  "phone": "+998337706673",
+  "password": "20020102tT",
+  "photo_id": "4"
+}
+
+### Get all
+GET localhost:8081/profile/all
+
+### update profile
+PUT localhost:8081/profile/update/153
+Content-Type: application/json
+
+{
+  "name": "Chumar",
+  "surname": "Say",
+  "email": "maga.zver@gmail.com",
+  "phone": "+998337706673",
+  "password": "20020102tT",
+  "role": "ROLE_MODERATOR",
+  "photo_id": "12"
+}
+
+### delete profile by id
+DELETE localhost:8081/profile/delete/153

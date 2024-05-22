@@ -1,0 +1,28 @@
+### Create category
+POST localhost:8081/category/create
+Content-Type: application/json
+
+{
+  "orderNumber": 1,
+  "nameUz": "1 uz",
+  "nameEn": "2 en",
+  "nameRu": "3 ru"
+}
+
+### Get all
+GET localhost:8081/category/all
+
+### Update category
+PUT localhost:8081/category/update/1
+Content-Type: application/json
+
+{
+  "id": 4,
+  "orderNumber": 3,
+  "name_uz": "Dolzar uz",
+  "name_en": "Fast en",
+  "name_ru": "Срочные ru",
+  "visible": false,
+  "created_date": "2024-01-01"
+}
+
