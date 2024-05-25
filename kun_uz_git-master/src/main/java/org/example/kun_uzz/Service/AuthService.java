@@ -24,6 +24,7 @@ public class AuthService {
     private EmailHistoryService emailHistoryService;
 
     public String registration(RegistrationDTO dto) {
+
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(dto.getEmail());
         if (optional.isPresent()) {
             throw new AppBadException("Email already exists");
@@ -49,8 +50,12 @@ public class AuthService {
         stringBuilder.append("http://localhost:8081/auth/verification/");
         stringBuilder.append(entity.getId());
         stringBuilder.append("\n Mazgi.");
+
         emailHistoryService.checkEmailLimit(dto.getEmail());
+        emailHistoryService.isNotExpiredEmail(dto.getEmail());
+
         mailSenderService.send(dto.getEmail(), "Complete registration", stringBuilder.toString());
+
         return "To complete your registration please verify your email.";
 
     }
@@ -70,7 +75,7 @@ public class AuthService {
         if (entity.getCreated_date().plusMinutes(1).isBefore(LocalDateTime.now())) {
             entity.setCreated_date(LocalDateTime.now());
 
-            sendRegistrationEmail(entity.getId(),"Your account has expired");
+           mailSenderService.send(entity.getId().toString(),"Your account has expired", entity.getEmail());
 
             return "Registration expired, please try again";
         }
@@ -79,9 +84,11 @@ public class AuthService {
     }
 
 
+
+
     public void sendRegistrationEmail(Integer profileId, String email) {
         // send email
-        String url = "http://localhost:8080/auth/verification/" + profileId;
+        String url = "http://localhost:8081/auth/verification/" + profileId;
         String formatText = "<style>\n" +
                 "    a:link, a:visited {\n" +
                 "        background-color: #f44336;\n" +
@@ -103,6 +110,7 @@ public class AuthService {
                 "    <div style=\"text-align: center\">\n" +
                 "        <a href=\"%s\" target=\"_blank\">This is a link</a>\n" +
                 "    </div>";
+
         String text = String.format(formatText, url);
         mailSenderService.send(email, "Complete registration", text);
         emailHistoryService.crete(email, text); // create history

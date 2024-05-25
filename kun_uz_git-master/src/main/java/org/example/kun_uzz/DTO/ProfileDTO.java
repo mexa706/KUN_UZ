@@ -6,6 +6,8 @@ import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Enums.ProfileStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class ProfileDTO {
@@ -19,5 +21,5 @@ public class ProfileDTO {
     private ProfileRole role;
     private Integer photo_id;
     private Boolean visible;
-    private LocalDate created_date;
+    private LocalDateTime created_date;
 }

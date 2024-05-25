@@ -34,7 +34,6 @@ public class ProfileService {
         entity.setEmail(dto.getEmail());
         entity.setPhone(dto.getPhone());
         entity.setPassword(dto.getPassword());
-        entity.setRole(dto.getRole());
         entity.setPhoto_id(dto.getPhoto_id());
 
         profileRepository.save(entity);
@@ -54,7 +53,7 @@ public class ProfileService {
         entity.setEmail(dto.getEmail());
         entity.setPhone(dto.getPhone());
         entity.setPassword(dto.getPassword());
-        entity.setRole(dto.getRole());
+
 
 
         profileRepository.save(entity);
