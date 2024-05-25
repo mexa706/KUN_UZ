@@ -7,6 +7,7 @@ import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Enums.ProfileStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -37,6 +38,6 @@ public class ProfileEntity {
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;;
     @Column(name = "created_date")
-    private LocalDate created_date=LocalDate.now();
+    private LocalDateTime created_date=LocalDateTime.now();
 }
 
