@@ -1,8 +1,10 @@
 package org.example.kun_uzz.Service;
 
 import okhttp3.*;
+import org.example.kun_uzz.repository.SmsHistoryRepository;
 import org.example.kun_uzz.util.RandomUtil;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +12,13 @@ import java.io.IOException;
 
 @Service
 public class SmsService {
+    @Autowired
+    private SmsHistoryRepository smsHistoryRepository;
 
     @Value("${sms.url}")
     private String smsUrl;
     @Value("${my.eskiz.uz.email}")
     private String myEskizUzEmail;
-
     @Value("${my.eskiz.uz.password}")
     private String myEskizUzPassword;
 

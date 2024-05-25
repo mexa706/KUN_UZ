@@ -6,10 +6,11 @@ import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.EmailHistoryRepository;
 import org.example.kun_uzz.repository.SmsHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+@Service
 public class SmsHistoryService {
     @Autowired
     private SmsHistoryRepository smsHistoryRepository;

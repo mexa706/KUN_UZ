@@ -13,25 +13,39 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/registration")
+    @PostMapping("/registrationByPhone")
     public ResponseEntity<String> registrationByPhone(@Valid @RequestBody RegistrationDTO dto) {
         String body = authService.registrationByPhone(dto);
         return ResponseEntity.ok().body(body);
     }
-    @GetMapping("/verification/{userId}")
+    @GetMapping("/verificationByPhone/{userId}")
     public ResponseEntity<String> verificationByPhone(@PathVariable("userId") Integer userId) {
         String body = authService.authorizationVerificationByPhone(userId);
         return ResponseEntity.ok().body(body);
     }
 
-    @GetMapping("/registration/resend/{email}")
-    public ResponseEntity<String> registrationResend(@PathVariable("email") String email) {
+    @GetMapping("/registrationByEmail/resend/{email}")
+    public ResponseEntity<String> registrationResendByEmail(@PathVariable("email") String email) {
         String body = authService.registrationResendByEmail(email);
         return ResponseEntity.ok().body(body);
     }
 
+    @GetMapping("/registrationByPhone/resend/{phone}")
+    public ResponseEntity<String> registrationResendByPhone(@PathVariable("phone") String phone) {
+        String body = authService.registrationResendByPhone(phone);
+        return ResponseEntity.ok().body(body);
+    }
 
-
+    @PostMapping("/registrationByEmail")
+    public ResponseEntity<String> registrationByEmail(@Valid @RequestBody RegistrationDTO dto) {
+        String body = authService.registrationByEmail(dto);
+        return ResponseEntity.ok().body(body);
+    }
+    @GetMapping("/verificationByEmail/{userId}")
+    public ResponseEntity<String> verificationByEmail(@PathVariable("userId") Integer userId) {
+        String body = authService.authorizationVerificationByEmail(userId);
+        return ResponseEntity.ok().body(body);
+    }
 
 
 

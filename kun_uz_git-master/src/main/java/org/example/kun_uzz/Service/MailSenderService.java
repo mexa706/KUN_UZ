@@ -18,12 +18,6 @@ public class MailSenderService {
     private String fromEmail;
 
     public void send(String toAccount, String subject, String text)  {
-//        SimpleMailMessage msg = new SimpleMailMessage();
-//        msg.setTo(toAccount);
-//        msg.setFrom(fromEmail);
-//        msg.setSubject(subject);
-//        msg.setText(text);
-//        javaMailSender.send(msg);
         try {
             MimeMessage msg = javaMailSender.createMimeMessage();
             msg.setFrom(fromEmail);
@@ -36,8 +30,6 @@ public class MailSenderService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
