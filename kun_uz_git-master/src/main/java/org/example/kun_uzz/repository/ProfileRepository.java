@@ -11,10 +11,13 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface ProfileRepository extends CrudRepository<ProfileEntity, Integer> {
-    Optional<ProfileEntity> findByEmailAndVisibleTrue(String email);
     @Transactional
     @Modifying
     @Query("update ProfileEntity set status =?2 where id =?1")
     int updateStatus(Integer profileId, ProfileStatus status);
 
+
+    Optional<ProfileEntity> findByEmailAndVisibleTrue(String email);
+
+    Optional<ProfileEntity> findByPhoneAndVisibleTrue(String phone);
 }

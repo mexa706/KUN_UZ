@@ -14,21 +14,25 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDTO dto) {
-        String body = authService.registration(dto);
+    public ResponseEntity<String> registrationByPhone(@Valid @RequestBody RegistrationDTO dto) {
+        String body = authService.registrationByPhone(dto);
         return ResponseEntity.ok().body(body);
     }
     @GetMapping("/verification/{userId}")
-    public ResponseEntity<String> verification(@PathVariable("userId") Integer userId) {
-        String body = authService.authorizationVerification(userId);
+    public ResponseEntity<String> verificationByPhone(@PathVariable("userId") Integer userId) {
+        String body = authService.authorizationVerificationByPhone(userId);
         return ResponseEntity.ok().body(body);
     }
- /*   @PostMapping ("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginDTO dto) {
-        String body = authService.login(dto);
+
+    @GetMapping("/registration/resend/{email}")
+    public ResponseEntity<String> registrationResend(@PathVariable("email") String email) {
+        String body = authService.registrationResendByEmail(email);
         return ResponseEntity.ok().body(body);
     }
-*/
+
+
+
+
 
 
 }

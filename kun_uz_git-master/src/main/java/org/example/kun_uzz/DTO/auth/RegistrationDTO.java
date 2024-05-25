@@ -13,6 +13,8 @@ public class RegistrationDTO {
     private String surname;
     @NotBlank(message = "email not found")
     private String email;
+    @NotBlank
+    private String phone;
     @NotBlank(message = "passord not found")
     private String password;
 
