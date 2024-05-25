@@ -27,9 +27,6 @@ public class ProfileCreateDTO {
     @Size(min = 6, message = "Пароль должен быть не менее 6 символов")
     private String password;
 
-    @NotNull(message = "Роль не должна быть null")
-    private ProfileRole role;
-
     @NotNull(message = "ID фото не должен быть null")
     private Integer photo_id;
 }
