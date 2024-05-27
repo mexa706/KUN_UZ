@@ -1,5 +1,7 @@
 package org.example.kun_uzz.Service;
 
+import org.example.kun_uzz.DTO.ProfileDTO;
+import org.example.kun_uzz.DTO.auth.LoginDTO;
 import org.example.kun_uzz.DTO.auth.RegistrationDTO;
 import org.example.kun_uzz.Entity.ProfileEntity;
 import org.example.kun_uzz.Enums.ProfileRole;
@@ -37,6 +39,7 @@ public class AuthService {
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
+        entity.setPhone(dto.getPhone());
         entity.setEmail(dto.getEmail());
         entity.setPassword(MD5.getMD5(dto.getPassword()));
 
@@ -204,8 +207,6 @@ public class AuthService {
         if (!entity.getVisible() || !entity.getStatus().equals(ProfileStatus.REGISTRATION)) {
             throw new AppBadException("Registration not completed");
         }
-
-
         smsHistoryService.checkPhoneLimit(phone);
         smsService.sendSms(phone);
         smsHistoryService.crete(phone, null); // create history
@@ -213,6 +214,17 @@ public class AuthService {
         return "To complete your registration please enter the code.";
     }
 
+    public Boolean login(LoginDTO dto) {
+        Optional<ProfileEntity> dto1 = profileRepository.findByEmailAndPasswordAndVisibleIsTrue(dto.getEmail(),MD5.getMD5(dto.getPassword()));
+        if (dto1.isEmpty()) {
+            throw new AppBadException("Email or password incorrect");
+        }
+        if (dto1.get().getStatus() != ProfileStatus.ACTIVE) {
+            throw new AppBadException("Profile is not active");
+        }
+
+        return true;
+    }
 }
 
 

@@ -1,6 +1,7 @@
 package org.example.kun_uzz.Controller;
 
 import jakarta.validation.Valid;
+import org.example.kun_uzz.DTO.auth.LoginDTO;
 import org.example.kun_uzz.DTO.auth.RegistrationDTO;
 import org.example.kun_uzz.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,12 @@ public class AuthController {
     @GetMapping("/verificationByEmail/{userId}")
     public ResponseEntity<String> verificationByEmail(@PathVariable("userId") Integer userId) {
         String body = authService.authorizationVerificationByEmail(userId);
+        return ResponseEntity.ok().body(body);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> registrationByEmail(@Valid @RequestBody LoginDTO dto) {
+        Boolean body = authService.login(dto);
         return ResponseEntity.ok().body(body);
     }
 
