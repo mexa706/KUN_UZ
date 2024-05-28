@@ -8,6 +8,7 @@ import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Enums.ProfileStatus;
 import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
+import org.example.kun_uzz.util.JwtUtill;
 import org.example.kun_uzz.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -214,16 +215,28 @@ public class AuthService {
         return "To complete your registration please enter the code.";
     }
 
-    public Boolean login(LoginDTO dto) {
-        Optional<ProfileEntity> dto1 = profileRepository.findByEmailAndPasswordAndVisibleIsTrue(dto.getEmail(),MD5.getMD5(dto.getPassword()));
+    public ProfileDTO login(LoginDTO dto) {
+        Optional<ProfileEntity> dto1 = profileRepository.findByEmailAndPasswordAndVisibleIsTrue(dto.getEmail(), MD5.getMD5(dto.getPassword()));
         if (dto1.isEmpty()) {
             throw new AppBadException("Email or password incorrect");
         }
         if (dto1.get().getStatus() != ProfileStatus.ACTIVE) {
             throw new AppBadException("Profile is not active");
         }
-
-        return true;
+        ProfileDTO dto2 = new ProfileDTO();
+        dto2.setId(dto1.get().getId());
+        dto2.setSurname(dto1.get().getSurname());
+        dto2.setName(dto1.get().getName());
+        dto2.setRole(dto1.get().getRole());
+        dto2.setVisible(dto1.get().getVisible());
+        dto2.setPassword(dto1.get().getPassword());
+        dto2.setPhone(dto1.get().getPhone());
+        dto2.setStatus(dto1.get().getStatus());
+        dto2.setPhoto_id(dto1.get().getPhoto_id());
+        dto2.setCreated_date(dto1.get().getCreated_date());
+        dto2.setEmail(dto1.get().getEmail());
+        dto2.setJwt(JwtUtill.encode(dto1.get().getId(), dto1.get().getRole()));
+        return dto2;
     }
 }
 

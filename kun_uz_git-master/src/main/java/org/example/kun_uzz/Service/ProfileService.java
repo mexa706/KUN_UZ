@@ -2,10 +2,7 @@ package org.example.kun_uzz.Service;
 
 import jakarta.persistence.Column;
 import lombok.Setter;
-import org.example.kun_uzz.DTO.ProfileCreateDTO;
-import org.example.kun_uzz.DTO.ProfileDTO;
-import org.example.kun_uzz.DTO.RegionCreateDTO;
-import org.example.kun_uzz.DTO.RegionDTO;
+import org.example.kun_uzz.DTO.*;
 import org.example.kun_uzz.Entity.ProfileEntity;
 import org.example.kun_uzz.Entity.RegionEntity;
 import org.example.kun_uzz.Enums.ProfileRole;
@@ -40,7 +37,7 @@ public class ProfileService {
         return toDTO(entity);
     }
 
-    public ProfileDTO update(Integer id, ProfileCreateDTO dto) {
+    public ProfileDTO update(Integer id , ProfileUpdateDTO dto) {
 
 
 
@@ -50,10 +47,6 @@ public class ProfileService {
 
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
-        entity.setEmail(dto.getEmail());
-        entity.setPhone(dto.getPhone());
-        entity.setPassword(dto.getPassword());
-
 
 
         profileRepository.save(entity);

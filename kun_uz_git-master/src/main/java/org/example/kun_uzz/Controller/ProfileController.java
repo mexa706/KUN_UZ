@@ -1,13 +1,12 @@
 package org.example.kun_uzz.Controller;
 
 import jakarta.validation.Valid;
-import org.example.kun_uzz.DTO.ProfileCreateDTO;
-import org.example.kun_uzz.DTO.ProfileDTO;
-import org.example.kun_uzz.DTO.RegionCreateDTO;
-import org.example.kun_uzz.DTO.RegionDTO;
+import org.example.kun_uzz.DTO.*;
 import org.example.kun_uzz.Entity.ProfileEntity;
+import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Service.ProfileService;
 import org.example.kun_uzz.Service.RegionService;
+import org.example.kun_uzz.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,11 @@ public class ProfileController {
     private ProfileService profileService;
 
     @PostMapping("/create")
-    public ResponseEntity<ProfileDTO> create(@Valid @RequestBody ProfileCreateDTO profile) {
+    public ResponseEntity<ProfileDTO> create(@Valid @RequestBody ProfileCreateDTO profile,
+                                             @RequestHeader("Authorization") String token) {
+
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
         ProfileDTO response = profileService.create(profile);
         return ResponseEntity.ok().body(response);
     }
@@ -36,9 +39,11 @@ public class ProfileController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping(value = "/update/{id}")
-    public ResponseEntity<ProfileDTO> update(@PathVariable Integer id, @RequestBody ProfileCreateDTO profileCreateDTO) {
-        ProfileDTO response = profileService.update(id, profileCreateDTO);
+    @PutMapping(value = "/current")
+    public ResponseEntity<ProfileDTO> update(@Valid @RequestBody ProfileUpdateDTO profileUpdateDTO,
+                                             @RequestHeader("Authorization") String token) {
+
+        ProfileDTO response = profileService.update(SecurityUtil.getJwtDTO(token).getId(),profileUpdateDTO);
         return ResponseEntity.ok(response);
     }
 
