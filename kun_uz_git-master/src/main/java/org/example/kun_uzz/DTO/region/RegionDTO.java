@@ -1,4 +1,4 @@
-package org.example.kun_uzz.DTO;
+package org.example.kun_uzz.DTO.region;
 
 import lombok.Getter;
 import lombok.Setter;

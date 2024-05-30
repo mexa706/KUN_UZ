@@ -1,17 +1,12 @@
 package org.example.kun_uzz.Service;
 
-import jakarta.persistence.Column;
-import lombok.Setter;
-import org.example.kun_uzz.DTO.*;
+import org.example.kun_uzz.DTO.profile.ProfileCreateDTO;
+import org.example.kun_uzz.DTO.profile.ProfileDTO;
+import org.example.kun_uzz.DTO.profile.ProfileUpdateDTO;
 import org.example.kun_uzz.Entity.ProfileEntity;
-import org.example.kun_uzz.Entity.RegionEntity;
-import org.example.kun_uzz.Enums.ProfileRole;
-import org.example.kun_uzz.Enums.ProfileStatus;
 import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
-import org.example.kun_uzz.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -55,7 +50,9 @@ public class ProfileService {
     }
 
     public Boolean delete(Integer id) {
+
         profileRepository.deleteById(id);
+
         return true;
     }
 

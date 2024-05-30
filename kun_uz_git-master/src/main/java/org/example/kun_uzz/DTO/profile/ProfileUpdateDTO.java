@@ -1,4 +1,4 @@
-package org.example.kun_uzz.DTO;
+package org.example.kun_uzz.DTO.profile;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

@@ -1,10 +1,8 @@
 package org.example.kun_uzz.Controller;
 
 import jakarta.validation.Valid;
-import org.example.kun_uzz.DTO.CategoryCreateDTO;
-import org.example.kun_uzz.DTO.CategoryDTO;
-import org.example.kun_uzz.DTO.TypeCreateDTO;
-import org.example.kun_uzz.DTO.TypeDTO;
+import org.example.kun_uzz.DTO.type.TypeCreateDTO;
+import org.example.kun_uzz.DTO.type.TypeDTO;
 import org.example.kun_uzz.Enums.Language;
 import org.example.kun_uzz.Service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;

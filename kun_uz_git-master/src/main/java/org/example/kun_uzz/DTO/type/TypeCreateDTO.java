@@ -1,11 +1,11 @@
-package org.example.kun_uzz.DTO;
+package org.example.kun_uzz.DTO.type;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryCreateDTO {
+public class TypeCreateDTO {
     private Integer orderNumber;
     private String nameUz;
     private String nameRu;

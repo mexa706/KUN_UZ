@@ -1,11 +1,10 @@
-package org.example.kun_uzz.DTO;
+package org.example.kun_uzz.DTO.profile;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Enums.ProfileStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

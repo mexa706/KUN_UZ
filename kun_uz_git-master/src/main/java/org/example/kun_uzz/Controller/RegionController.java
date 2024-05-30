@@ -1,8 +1,8 @@
 package org.example.kun_uzz.Controller;
 
 import jakarta.validation.Valid;
-import org.example.kun_uzz.DTO.RegionCreateDTO;
-import org.example.kun_uzz.DTO.RegionDTO;
+import org.example.kun_uzz.DTO.region.RegionCreateDTO;
+import org.example.kun_uzz.DTO.region.RegionDTO;
 import org.example.kun_uzz.Enums.Language;
 import org.example.kun_uzz.Service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;

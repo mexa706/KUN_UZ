@@ -1,8 +1,8 @@
 package org.example.kun_uzz.Service;
 
 
-import org.example.kun_uzz.DTO.RegionCreateDTO;
-import org.example.kun_uzz.DTO.RegionDTO;
+import org.example.kun_uzz.DTO.region.RegionCreateDTO;
+import org.example.kun_uzz.DTO.region.RegionDTO;
 import org.example.kun_uzz.Entity.RegionEntity;
 import org.example.kun_uzz.Enums.Language;
 import org.example.kun_uzz.exp.AppBadException;

@@ -1,19 +1,15 @@
 package org.example.kun_uzz.Controller;
 
 import jakarta.validation.Valid;
-import org.example.kun_uzz.DTO.CategoryCreateDTO;
-import org.example.kun_uzz.DTO.CategoryDTO;
-import org.example.kun_uzz.DTO.RegionCreateDTO;
-import org.example.kun_uzz.DTO.RegionDTO;
+import org.example.kun_uzz.DTO.category.CategoryCreateDTO;
+import org.example.kun_uzz.DTO.category.CategoryDTO;
 import org.example.kun_uzz.Enums.Language;
 import org.example.kun_uzz.Service.CategoryService;
-import org.example.kun_uzz.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/category")

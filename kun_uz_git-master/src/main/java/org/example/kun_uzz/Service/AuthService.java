@@ -1,6 +1,6 @@
 package org.example.kun_uzz.Service;
 
-import org.example.kun_uzz.DTO.ProfileDTO;
+import org.example.kun_uzz.DTO.profile.ProfileDTO;
 import org.example.kun_uzz.DTO.auth.LoginDTO;
 import org.example.kun_uzz.DTO.auth.RegistrationDTO;
 import org.example.kun_uzz.Entity.ProfileEntity;

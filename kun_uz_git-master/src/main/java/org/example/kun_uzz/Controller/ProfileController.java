@@ -1,17 +1,16 @@
 package org.example.kun_uzz.Controller;
 
 import jakarta.validation.Valid;
-import org.example.kun_uzz.DTO.*;
-import org.example.kun_uzz.Entity.ProfileEntity;
+import org.example.kun_uzz.DTO.profile.ProfileCreateDTO;
+import org.example.kun_uzz.DTO.profile.ProfileDTO;
+import org.example.kun_uzz.DTO.profile.ProfileUpdateDTO;
 import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Service.ProfileService;
-import org.example.kun_uzz.Service.RegionService;
 import org.example.kun_uzz.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,10 @@ public class ProfileController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ProfileDTO>> getAll() {
+    public ResponseEntity<List<ProfileDTO>> getAll( @RequestHeader("Authorization") String token) {
+
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
         List<ProfileDTO> response = profileService.getAll();
         return ResponseEntity.ok().body(response);
     }
@@ -47,9 +49,10 @@ public class ProfileController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping (value = "/delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
-       Boolean response =profileService.delete(id);
+    @DeleteMapping (value = "/delete")
+    public ResponseEntity<Boolean> delete(  @RequestHeader("Authorization") String token) {
+
+       Boolean response =profileService.delete(SecurityUtil.getJwtDTO(token).getId());
         return ResponseEntity.ok(response);
     }
 

@@ -1,4 +1,4 @@
-package org.example.kun_uzz.DTO;
+package org.example.kun_uzz.DTO.region;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;

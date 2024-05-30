@@ -1,9 +1,7 @@
 package org.example.kun_uzz.Service;
 
-import org.example.kun_uzz.DTO.CategoryDTO;
-import org.example.kun_uzz.DTO.TypeCreateDTO;
-import org.example.kun_uzz.DTO.TypeDTO;
-import org.example.kun_uzz.Entity.CategoryEntity;
+import org.example.kun_uzz.DTO.type.TypeCreateDTO;
+import org.example.kun_uzz.DTO.type.TypeDTO;
 import org.example.kun_uzz.Entity.TypeEntity;
 import org.example.kun_uzz.Enums.Language;
 import org.example.kun_uzz.exp.AppBadException;
