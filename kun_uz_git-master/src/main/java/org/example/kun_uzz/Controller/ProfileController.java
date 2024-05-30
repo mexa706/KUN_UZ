@@ -1,11 +1,15 @@
 package org.example.kun_uzz.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.example.kun_uzz.DTO.JwtDTO;
 import org.example.kun_uzz.DTO.profile.ProfileCreateDTO;
 import org.example.kun_uzz.DTO.profile.ProfileDTO;
 import org.example.kun_uzz.DTO.profile.ProfileUpdateDTO;
 import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Service.ProfileService;
+import org.example.kun_uzz.util.HttpRequestUtil;
 import org.example.kun_uzz.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +28,13 @@ public class ProfileController {
 
     @PostMapping("/create")
     public ResponseEntity<ProfileDTO> create(@Valid @RequestBody ProfileCreateDTO profile,
-                                             @RequestHeader("Authorization") String token) {
+                                             @RequestHeader("Authorization") String token,
+                                             HttpServletRequest request) {
 
-        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
+        //SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
+        JwtDTO jwtDTO= HttpRequestUtil.getJwtDTO(request , ProfileRole.ROLE_ADMIN);
 
         ProfileDTO response = profileService.create(profile);
         return ResponseEntity.ok().body(response);
