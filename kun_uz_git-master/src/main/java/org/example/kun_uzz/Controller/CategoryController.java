@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import org.example.kun_uzz.DTO.category.CategoryCreateDTO;
 import org.example.kun_uzz.DTO.category.CategoryDTO;
 import org.example.kun_uzz.Enums.Language;
+import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Service.CategoryService;
+import org.example.kun_uzz.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +20,20 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<CategoryDTO> create(@Valid @RequestBody CategoryCreateDTO categoryCreateDTO) {
+    public ResponseEntity<CategoryDTO> create(@Valid @RequestBody CategoryCreateDTO categoryCreateDTO,
+                                              @RequestHeader("Authorization") String token) {
+
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
         CategoryDTO response = categoryService.create(categoryCreateDTO);
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<CategoryDTO>> getAll() {
+    public ResponseEntity<List<CategoryDTO>> getAll( @RequestHeader("Authorization") String token) {
+
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
         List<CategoryDTO> response = categoryService.getAll();
         return ResponseEntity.ok().body(response);
     }
@@ -32,14 +41,21 @@ public class CategoryController {
 
     @GetMapping("/lang")
     public ResponseEntity<List<CategoryDTO>> getAllByLang(
-            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language lang) {
+            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") Language lang, @RequestHeader("Authorization") String token) {
+
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
         List <CategoryDTO> response = categoryService.getAllByLang(lang);
         return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Boolean> updateRegion(@PathVariable("id") Integer id,
-                                                @Valid  @RequestBody CategoryDTO dto) {
+                                                @Valid  @RequestBody CategoryDTO dto, @RequestHeader("Authorization") String token) {
+
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+
+
         Boolean result = categoryService.update(id, dto);
         return ResponseEntity.ok().body(result);
     }
