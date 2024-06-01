@@ -1,72 +1,76 @@
 package org.example.kun_uzz.config;
 
+import org.example.kun_uzz.util.MD5;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
-import java.util.UUID;
-
-@EnableWebFluxSecurity
 @Component
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    CustomUserDetailService customUserDetailService;
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         // authentication
-        String password = UUID.randomUUID().toString();
-        System.out.println("User Pasword mazgi: " + password);
-
-        UserDetails user = User.builder()
-                .username("user")
-                .password("{noop}" + password)
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password("{noop}adminjon")
-                .roles("ADMIN")
-                .build();
 
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(new InMemoryUserDetailsManager(user,admin));
+        authenticationProvider.setUserDetailsService(customUserDetailService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
+
+
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // authorization
-        /*http.authorizeHttpRequests()
-                .anyRequest()
-                .authenticated()
-                .and().formLogin();*/
 
+    @Bean
+    public PasswordEncoder passwordEncoder() { //
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return rawPassword.toString();
+            }
+
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                return MD5.getMD5(rawPassword.toString()).equals(encodedPassword);
+            }
+        };
+    }
+
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenFilter jwtTokenFilter) throws Exception {
+        // authorization
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-            authorizationManagerRequestMatcherRegistry
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/profile/create").hasRole("ADMIN")
-                    .requestMatchers("/profile/update/*").hasRole("ADMIN")
-                    .requestMatchers("/region/lang").permitAll()
-                    .requestMatchers("/region/adm/**").hasRole("ADMIN")
-                    .anyRequest()
-                    .authenticated();
+            authorizationManagerRequestMatcherRegistry.
+                    requestMatchers("/auth/**").permitAll().
+                    requestMatchers("/profile/create").hasRole("ADMIN").
+                    requestMatchers("/region/lang").permitAll().
+                    requestMatchers("/region/adm/**").hasRole("ADMIN").
+                    anyRequest().authenticated();
         });
 
-        http.httpBasic(Customizer.withDefaults());
+
+      //http.httpBasic(Customizer.withDefaults());
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
 
         return http.build();
+
     }
 
 

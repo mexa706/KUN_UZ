@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.Enums.ProfileStatus;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

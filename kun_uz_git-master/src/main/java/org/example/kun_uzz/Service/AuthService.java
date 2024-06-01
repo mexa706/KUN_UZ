@@ -235,7 +235,7 @@ public class AuthService {
         dto2.setPhoto_id(dto1.get().getPhoto_id());
         dto2.setCreated_date(dto1.get().getCreated_date());
         dto2.setEmail(dto1.get().getEmail());
-        dto2.setJwt(JwtUtill.encode(dto1.get().getId(), dto1.get().getRole()));
+        dto2.setJwt(JwtUtill.encode(dto1.get().getId(), dto1.get().getRole(),dto1.get().getEmail()));
         return dto2;
     }
 }

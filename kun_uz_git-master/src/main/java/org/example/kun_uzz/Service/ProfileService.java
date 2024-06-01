@@ -4,8 +4,10 @@ import org.example.kun_uzz.DTO.profile.ProfileCreateDTO;
 import org.example.kun_uzz.DTO.profile.ProfileDTO;
 import org.example.kun_uzz.DTO.profile.ProfileUpdateDTO;
 import org.example.kun_uzz.Entity.ProfileEntity;
+import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
+import org.example.kun_uzz.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,7 +31,9 @@ public class ProfileService {
         entity.setSurname(dto.getSurname());
         entity.setEmail(dto.getEmail());
         entity.setPhone(dto.getPhone());
-        entity.setPassword(dto.getPassword());
+        entity.setRole(dto.getRole());
+        entity.setRole(dto.getRole());
+        entity.setPassword(MD5.getMD5(dto.getPassword()));
         entity.setPhoto_id(dto.getPhoto_id());
 
         profileRepository.save(entity);

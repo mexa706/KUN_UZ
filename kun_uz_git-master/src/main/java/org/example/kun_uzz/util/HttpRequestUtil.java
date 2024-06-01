@@ -1,3 +1,4 @@
+/*
 package org.example.kun_uzz.util;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +12,7 @@ public class HttpRequestUtil {
     public static JwtDTO getJwtDTO(HttpServletRequest request) {
         Integer id = (Integer) request.getAttribute("id");
         ProfileRole role = (ProfileRole) request.getAttribute("role");
-        JwtDTO dto = new JwtDTO(id,role);
+        JwtDTO dto = new JwtDTO(id,role,);
         return dto;
     }
     public static JwtDTO getJwtDTO(HttpServletRequest request, ProfileRole requiredRole) {
@@ -27,3 +28,4 @@ public class HttpRequestUtil {
 
 
 }
+*/
