@@ -12,6 +12,7 @@ import org.example.kun_uzz.Service.ProfileService;
 import org.example.kun_uzz.util.HttpRequestUtil;
 import org.example.kun_uzz.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class ProfileController {
         JwtDTO jwtDTO= HttpRequestUtil.getJwtDTO(request , ProfileRole.ROLE_ADMIN);
 
         ProfileDTO response = profileService.create(profile);
+
         return ResponseEntity.ok().body(response);
     }
 
@@ -64,5 +66,13 @@ public class ProfileController {
         return ResponseEntity.ok(response);
     }
 
+ /*   @GetMapping("/all_with_pagination")
+    public ResponseEntity<PageImpl<ProfileDTO>> getAllWithPagination(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                                     @RequestParam(value = "size", defaultValue = "10") int size,
+                                                                     @RequestHeader("Authorization") String token) {
+        SecurityUtil.getJwtDTO(token, ProfileRole.ROLE_ADMIN);
+        PageImpl<ProfileDTO> pageList = profileService.getAllWithPagination(page - 1, size);
+        return ResponseEntity.ok().body(pageList);
+    }*/
 
 }

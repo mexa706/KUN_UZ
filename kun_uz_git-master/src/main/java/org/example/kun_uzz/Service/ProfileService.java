@@ -7,6 +7,10 @@ import org.example.kun_uzz.Entity.ProfileEntity;
 import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -88,4 +92,16 @@ public class ProfileService {
         dto.setStatus(entity.getStatus());
         return dto;
     }
+  /*  public PageImpl<ProfileDTO> getAllWithPagination(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProfileEntity> profileEntities = profileRepository.findAll(pageable);
+
+        List<ProfileDTO> profileList = new ArrayList<>();
+
+        profileEntities.getContent().forEach(profileEntity -> profileList.add(toDTO(profileEntity)));
+
+        return new PageImpl<>(profileList, pageable, profileEntities.getTotalElements());
+    }*/
 }

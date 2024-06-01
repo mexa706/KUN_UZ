@@ -20,7 +20,6 @@ import java.util.UUID;
 @EnableWebFluxSecurity
 @Component
 public class SecurityConfig {
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
         // authentication
@@ -33,18 +32,30 @@ public class SecurityConfig {
                 .roles("USER")
                 .build();
 
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password("{noop}adminjon")
+                .roles("ADMIN")
+                .build();
+
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(new InMemoryUserDetailsManager(user));
+        authenticationProvider.setUserDetailsService(new InMemoryUserDetailsManager(user,admin));
         return authenticationProvider;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // authorization
+        /*http.authorizeHttpRequests()
+                .anyRequest()
+                .authenticated()
+                .and().formLogin();*/
+
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/profile/create").hasRole("ADMIN")
+                    .requestMatchers("/profile/update/*").hasRole("ADMIN")
                     .requestMatchers("/region/lang").permitAll()
                     .requestMatchers("/region/adm/**").hasRole("ADMIN")
                     .anyRequest()
@@ -55,8 +66,8 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
 
-
         return http.build();
     }
+
 
 }
