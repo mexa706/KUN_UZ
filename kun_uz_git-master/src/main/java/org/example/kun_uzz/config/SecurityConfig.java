@@ -10,6 +10,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -58,6 +59,7 @@ public class SecurityConfig {
             authorizationManagerRequestMatcherRegistry.
                     requestMatchers("/auth/**").permitAll().
                     requestMatchers("/profile/create").hasRole("ADMIN").
+                    requestMatchers("/article/moderator","/article/moderator/**").hasRole("MODERATOR").
                     requestMatchers("/region/lang").permitAll().
                     requestMatchers("/region/adm/**").hasRole("ADMIN").
                     anyRequest().authenticated();
@@ -72,6 +74,9 @@ public class SecurityConfig {
         return http.build();
 
     }
+
+
+
 
 
 }

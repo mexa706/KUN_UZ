@@ -1,8 +1,13 @@
 package org.example.kun_uzz.util;
 
+
 import org.example.kun_uzz.DTO.JwtDTO;
+import org.example.kun_uzz.Entity.ProfileEntity;
 import org.example.kun_uzz.Enums.ProfileRole;
+import org.example.kun_uzz.config.CustomUserDetail;
 import org.example.kun_uzz.exp.AppForbiddenException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtil {
 
@@ -18,5 +23,18 @@ public class SecurityUtil {
         }
         return dto;
     }
+
+    public static Integer getProfileId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
+        return user.getProfile().getId();
+    }
+
+    public static ProfileEntity getProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
+        return user.getProfile();
+    }
+
 
 }
