@@ -10,7 +10,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ArticleCreateDTO {
+public class ArticleCreateDto {
     @NotBlank(message = "Title bo'sh bo'lishi mumkin emas")
     @Size(min = 3,  message = "Berilgan title ning uzunligi 3 ta harifdan kam bo'lishi mumkin emas")
     private String title;                 // Yangilikning nomi
@@ -23,7 +23,7 @@ public class ArticleCreateDTO {
     @Size(min = 3,  message = "Berilgan description ning uzunligi 3 ta harifdan kam bo'lishi mumkin emas")
     private String content;               // Malumotni to'liq qismi
 
-    private Integer imageId;              // Yangilikni rasmining Id si
+    private String imageId;              // Yangilikni rasmining Id si
 
     @NotNull(message = " Region number bo'sh bo'lishi mumkin emas")
     @Min(value = 1, message = "Region number ning qiymati minimal 1 bo'lsin")

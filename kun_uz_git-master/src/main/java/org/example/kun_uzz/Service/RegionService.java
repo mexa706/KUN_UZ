@@ -40,13 +40,13 @@ public class RegionService {
         regionRepository.save(entity);
         return true;
     }
+
     public Boolean delete(Integer id) {
-      /*  RegionEntity entity = get(id);
-        regionRepository.delete(entity);*/
-        regionRepository.deleteById(id);
+        RegionEntity entity = get(id);
+        regionRepository.delete(entity);
+//        regionRepository.deleteById(id);
         return true;
     }
-
 
     public RegionEntity get(Integer id) {
         return regionRepository.findById(id).orElseThrow(() -> {
@@ -54,14 +54,25 @@ public class RegionService {
         });
     }
 
+    public RegionDTO getRegion(Integer id, Language lang) {
+        RegionEntity region = get(id);
+        RegionDTO dto = new RegionDTO();
+        dto.setId(region.getId());
+        switch (lang) {
+            case Uz -> dto.setName(region.getName_uz());
+            case Ru -> dto.setName(region.getName_ru());
+            default -> dto.setName(region.getName_en());
+        }
+        return dto;
+    }
 
     public List<RegionDTO> getAll() {
-        Iterable<RegionEntity> regions = regionRepository.findAll();
-        List<RegionDTO> list = new ArrayList<>();
-        for (RegionEntity region : regions) {
-            list.add(toDTO(region));
+        Iterable<RegionEntity> iterable = regionRepository.findAll();
+        List<RegionDTO> dtoList = new LinkedList<>();
+        for (RegionEntity entity : iterable) {
+            dtoList.add(toDTO(entity));
         }
-        return list;
+        return dtoList;
     }
 
     public List<RegionDTO> getAllByLang(Language lang) {
@@ -71,16 +82,14 @@ public class RegionService {
             RegionDTO dto = new RegionDTO();
             dto.setId(entity.getId());
             switch (lang) {
-                case en -> dto.setName(entity.getName_en());
-                case uz -> dto.setName(entity.getName_uz());
-                case ru -> dto.setName(entity.getName_ru());
+                case En -> dto.setName(entity.getName_en());
+                case Uz -> dto.setName(entity.getName_uz());
+                case Ru -> dto.setName(entity.getName_ru());
             }
             dtoList.add(dto);
         }
         return dtoList;
     }
-
-
 
     public List<RegionDTO> getAllByLang2(Language lang) {
         List<RegionMapper> mapperList = regionRepository.findAll(lang.name());
@@ -94,13 +103,12 @@ public class RegionService {
         return dtoList;
     }
 
-    public  RegionDTO toDTO(RegionEntity entity){
+    public RegionDTO toDTO(RegionEntity entity) {
         RegionDTO dto = new RegionDTO();
         dto.setId(entity.getId());
         dto.setNameUz(entity.getName_uz());
         dto.setNameEn(entity.getName_en());
         dto.setNameRu(entity.getName_ru());
-        dto.setVisible(entity.getVisible());
         dto.setOrderNumber(entity.getOrderNumber());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
