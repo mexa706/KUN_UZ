@@ -1,9 +1,9 @@
 package org.example.kun_uzz.Service;
 
-import com.example.lesson_20.dto.AttachDTO;
-import com.example.lesson_20.entity.AttachEntity;
-import com.example.lesson_20.exp.AppBadException;
-import com.example.lesson_20.repository.AttachRepository;
+
+import org.example.kun_uzz.DTO.AttachDTO;
+import org.example.kun_uzz.Entity.AttachEntity;
+import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.AttachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +31,8 @@ public class AttachService {
 
     @Value("${server.url}")
     private String serverUrl;
+
+
     @Autowired
     private AttachRepository attachRepository;
 

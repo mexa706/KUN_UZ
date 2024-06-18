@@ -3,6 +3,7 @@ package org.example.kun_uzz.DTO.article;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.example.kun_uzz.DTO.AttachDTO;
 import org.example.kun_uzz.DTO.category.CategoryDTO;
 import org.example.kun_uzz.DTO.region.RegionDTO;
 

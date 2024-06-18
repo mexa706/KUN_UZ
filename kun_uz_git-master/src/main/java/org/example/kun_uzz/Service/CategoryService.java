@@ -62,9 +62,9 @@ public class CategoryService {
             dto.setId(entity.getId());
             dto.setOrder_number(entity.getOrderNumber());
             switch (lang) {
-                case en -> dto.setName_en(entity.getName_en());
-                case uz -> dto.setName_uz(entity.getName_uz());
-                case ru -> dto.setName_ru(entity.getName_ru());
+                case En -> dto.setName_en(entity.getName_en());
+                case Uz -> dto.setName_uz(entity.getName_uz());
+                case Ru -> dto.setName_ru(entity.getName_ru());
             }
             dtoList.add(dto);
         }

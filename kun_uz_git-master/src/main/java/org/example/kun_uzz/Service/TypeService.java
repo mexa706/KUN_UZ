@@ -48,9 +48,9 @@ public class TypeService {
             dto.setId(entity.getId());
             dto.setOrderNumber(entity.getOrderNumber());
             switch (lang) {
-                case en -> dto.setNameEn(entity.getName_en());
-                case uz -> dto.setNameUz(entity.getName_uz());
-                case ru -> dto.setNameRu(entity.getName_ru());
+                case En -> dto.setNameEn(entity.getName_en());
+                case Uz -> dto.setNameUz(entity.getName_uz());
+                case Ru -> dto.setNameRu(entity.getName_ru());
             }
             dtoList.add(dto);
         }
