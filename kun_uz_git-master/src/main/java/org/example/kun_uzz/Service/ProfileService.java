@@ -1,5 +1,7 @@
 package org.example.kun_uzz.Service;
 
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.example.kun_uzz.DTO.profile.ProfileCreateDTO;
 import org.example.kun_uzz.DTO.profile.ProfileDTO;
 import org.example.kun_uzz.DTO.profile.ProfileUpdateDTO;
@@ -8,6 +10,8 @@ import org.example.kun_uzz.Enums.ProfileRole;
 import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
 import org.example.kun_uzz.util.MD5;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 public class ProfileService {
     @Autowired
@@ -34,7 +38,7 @@ public class ProfileService {
         entity.setRole(dto.getRole());
         entity.setRole(dto.getRole());
         entity.setPassword(MD5.getMD5(dto.getPassword()));
-        entity.setPhoto_id(dto.getPhoto_id());
+        entity.setPhotoId(dto.getPhoto_id());
 
         profileRepository.save(entity);
         return toDTO(entity);
@@ -66,6 +70,7 @@ public class ProfileService {
 
     public ProfileEntity get(Integer id) {
         return profileRepository.findById(id).orElseThrow(() -> {
+            log.error("Profile not found id = {}", id);
             throw new AppBadException("Profile not found");
         });
     }
@@ -91,8 +96,8 @@ public class ProfileService {
         dto.setVisible(entity.getVisible());
         dto.setPassword(entity.getPassword());
         dto.setRole(entity.getRole());
-        dto.setCreated_date(entity.getCreated_date());
-        dto.setPhoto_id(entity.getPhoto_id());
+        dto.setCreated_date(entity.getCreatedDate());
+        dto.setPhoto_id(entity.getPhotoId());
         dto.setStatus(entity.getStatus());
         return dto;
     }

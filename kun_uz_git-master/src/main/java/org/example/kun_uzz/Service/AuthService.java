@@ -1,5 +1,8 @@
 package org.example.kun_uzz.Service;
 
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
+import org.example.kun_uzz.Controller.AuthController;
 import org.example.kun_uzz.DTO.profile.ProfileDTO;
 import org.example.kun_uzz.DTO.auth.LoginDTO;
 import org.example.kun_uzz.DTO.auth.RegistrationDTO;
@@ -10,13 +13,15 @@ import org.example.kun_uzz.exp.AppBadException;
 import org.example.kun_uzz.repository.ProfileRepository;
 import org.example.kun_uzz.util.JwtUtill;
 import org.example.kun_uzz.util.MD5;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 public class AuthService {
     @Autowired
@@ -30,10 +35,13 @@ public class AuthService {
     @Autowired
     private SmsService smsService;
 
+
+
     public String registrationByEmail(RegistrationDTO dto) {
 
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(dto.getEmail());
         if (optional.isPresent()) {
+            log.warn("Email already exists email : {}", dto.getEmail());
             throw new AppBadException("Email already exists");
         }
 
@@ -44,7 +52,7 @@ public class AuthService {
         entity.setEmail(dto.getEmail());
         entity.setPassword(MD5.getMD5(dto.getPassword()));
 
-        entity.setCreated_date(LocalDateTime.now());
+        entity.setCreatedDate(LocalDateTime.now());
         entity.setRole(ProfileRole.ROLE_USER);
         entity.setStatus(ProfileStatus.REGISTRATION);
 
@@ -96,8 +104,8 @@ public class AuthService {
         if (!entity.getVisible() || !entity.getStatus().equals(ProfileStatus.REGISTRATION)) {
             throw new AppBadException("Registration not completed");
         }
-        if (entity.getCreated_date().plusMinutes(1).isBefore(LocalDateTime.now())) {
-            entity.setCreated_date(LocalDateTime.now());
+        if (entity.getCreatedDate().plusMinutes(1).isBefore(LocalDateTime.now())) {
+            entity.setCreatedDate(LocalDateTime.now());
 
             mailSenderService.send(entity.getId().toString(), "Your account has expired", entity.getEmail());
 
@@ -169,7 +177,7 @@ public class AuthService {
         entity.setPhone(dto.getPhone());
         entity.setPassword(MD5.getMD5(dto.getPassword()));
 
-        entity.setCreated_date(LocalDateTime.now());
+        entity.setCreatedDate(LocalDateTime.now());
         entity.setRole(ProfileRole.ROLE_USER);
         entity.setStatus(ProfileStatus.REGISTRATION);
 
@@ -232,8 +240,8 @@ public class AuthService {
         dto2.setPassword(dto1.get().getPassword());
         dto2.setPhone(dto1.get().getPhone());
         dto2.setStatus(dto1.get().getStatus());
-        dto2.setPhoto_id(dto1.get().getPhoto_id());
-        dto2.setCreated_date(dto1.get().getCreated_date());
+        dto2.setPhoto_id(dto1.get().getPhotoId());
+        dto2.setCreated_date(dto1.get().getCreatedDate());
         dto2.setEmail(dto1.get().getEmail());
         dto2.setJwt(JwtUtill.encode(dto1.get().getId(), dto1.get().getRole(),dto1.get().getEmail()));
         return dto2;
