@@ -56,17 +56,31 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenFilter jwtTokenFilter) throws Exception {
         // authorization
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-            authorizationManagerRequestMatcherRegistry.
-                    requestMatchers("/auth/**").permitAll().
-                    requestMatchers("/profile/create").hasRole("ADMIN").
-                    requestMatchers("/article/moderator","/article/moderator/**").hasRole("MODERATOR").
-                    requestMatchers("/region/lang").permitAll().
-                    requestMatchers("/region/adm/**").hasRole("ADMIN").
-                    anyRequest().authenticated();
+
+            authorizationManagerRequestMatcherRegistry
+                    //swager
+                    .requestMatchers("/v2/api-docs").permitAll()
+                    .requestMatchers("/v3/api-docs").permitAll()
+                    .requestMatchers("/v3/api-docs/**").permitAll()
+                    .requestMatchers("/swagger-resources").permitAll()
+                    .requestMatchers("/swagger-resources/**").permitAll()
+                    .requestMatchers("/configuration/ui").permitAll()
+                    .requestMatchers("/configuration/security").permitAll()
+                    .requestMatchers("/swagger-ui/**").permitAll()
+                    .requestMatchers("/webjars/**").permitAll()
+                    .requestMatchers("/swagger-ui.html").permitAll()
+
+
+                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/profile/create").hasRole("ADMIN")
+                    .requestMatchers("/profile/update/*").hasRole("ADMIN")
+                    .requestMatchers("/region/lang").permitAll()
+                    .requestMatchers("/attach/**").permitAll()
+                    .requestMatchers("/region/adm/**").hasRole("ADMIN")
+                    .requestMatchers("/article/moderator/**", "/article/moderator")
+                    .hasRole("MODERATOR").anyRequest().authenticated();
         });
-
-
-      //http.httpBasic(Customizer.withDefaults());
+//        http.httpBasic(Customizer.withDefaults());
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);

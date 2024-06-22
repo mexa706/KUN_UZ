@@ -36,6 +36,11 @@ public class AttachService {
     @Autowired
     private AttachRepository attachRepository;
 
+
+
+    @Value("${attach.upload.url}")
+    private  String attachUrl;
+
     public String saveToSystem(MultipartFile file) {
         try {
             File folder = new File("attaches");
@@ -44,7 +49,7 @@ public class AttachService {
             }
 
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("attaches/" + file.getOriginalFilename()); // attaches/zari.jpg
+            Path path = Paths.get(attachUrl + file.getOriginalFilename()); // attaches/zari.jpg
             Files.write(path, bytes);
             return file.getOriginalFilename();
         } catch (IOException e) {
@@ -56,7 +61,7 @@ public class AttachService {
     public AttachDTO saveAttach(MultipartFile file) {
         try {
             String pathFolder = getYmDString(); // 2024/06/08
-            File folder = new File("uploads/" + pathFolder);
+            File folder = new File(attachUrl + pathFolder);
             if (!folder.exists()) {
                 folder.mkdirs();
             }
@@ -65,7 +70,7 @@ public class AttachService {
             String extension = getExtension(file.getOriginalFilename()); // dasda.asdas.dasd.jpg
             // save to system
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("uploads/" + pathFolder + "/" + key + "." + extension);
+            Path path = Paths.get(attachUrl + pathFolder + "/" + key + "." + extension);
             Files.write(path, bytes);
             // save to db
             AttachEntity entity = new AttachEntity();
@@ -86,7 +91,7 @@ public class AttachService {
     public byte[] loadImage(String fileName) {
         BufferedImage originalImage;
         try {
-            originalImage = ImageIO.read(new File("attaches/" + fileName));
+            originalImage = ImageIO.read(new File(attachUrl + fileName));
         } catch (Exception e) {
             return new byte[0];
         }
@@ -109,7 +114,7 @@ public class AttachService {
         try {
             // read from db
             AttachEntity entity = get(attachId);
-            originalImage = ImageIO.read(new File("uploads/" + entity.getPath() + "/" + attachId));
+            originalImage = ImageIO.read(new File(attachUrl + entity.getPath() + "/" + attachId));
             // read from system
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(originalImage, entity.getExtension(), baos);
@@ -129,7 +134,7 @@ public class AttachService {
         try {
             AttachEntity entity = get(attachId);
             String path = entity.getPath() + "/" + attachId;
-            Path file = Paths.get("uploads/" + path);
+            Path file = Paths.get(attachUrl + path);
             data = Files.readAllBytes(file);
             return data;
         } catch (IOException e) {
@@ -142,7 +147,7 @@ public class AttachService {
         try {
             AttachEntity entity = get(attachId);
             String path = entity.getPath() + "/" + attachId;
-            Path file = Paths.get("uploads/" + path);
+            Path file = Paths.get(attachUrl + path);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {

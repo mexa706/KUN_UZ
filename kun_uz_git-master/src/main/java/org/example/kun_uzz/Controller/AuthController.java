@@ -1,5 +1,7 @@
 package org.example.kun_uzz.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.example.kun_uzz.DTO.profile.ProfileDTO;
@@ -14,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Auth Controller", description = "Api list for authorization, registration and other ... ")
 public class AuthController {
     @Autowired
     private AuthService authService;
 
-
-
+    @Operation( summary = "Registration", description = "Api for profile registration")
     @PostMapping("/registrationByPhone")
     public ResponseEntity<String> registrationByPhone(@Valid @RequestBody RegistrationDTO dto) {
         String body = authService.registrationByPhone(dto);
@@ -50,6 +52,7 @@ public class AuthController {
         String body = authService.registrationByEmail(dto);
         return ResponseEntity.ok().body(body);
     }
+
     @GetMapping("/verificationByEmail/{userId}")
     public ResponseEntity<String> verificationByEmail(@PathVariable("userId") Integer userId) {
         String body = authService.authorizationVerificationByEmail(userId);
